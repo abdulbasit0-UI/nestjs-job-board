@@ -9,11 +9,11 @@ import { DataSource } from "typeorm";
 
 export const typeormConfig = (): TypeOrmModuleOptions => ({
     type: 'postgres',
-    host: 'localhost',
-    port: 5432,
-    username: 'postgres',
-    password: 'postgres',
-    database: 'job_board_dev',
+    host: process.env.DB_HOST,
+    port: Number(process.env.DB_PORT),
+    username: process.env.DB_USER,
+    password: process.env.DB_PASSWORD,
+    database: process.env.DB_NAME,
     synchronize: false,
     entities: [User, Company, Job, Application, Skill],
     migrations: ['dist/database/migrations/*.js'],
@@ -23,11 +23,11 @@ export const typeormConfig = (): TypeOrmModuleOptions => ({
 
 export default new DataSource({
     type: 'postgres',
-    host: 'localhost',
-    port: 5432,
-    username: 'postgres',
-    password: 'postgres',
-    database: 'job_board_dev',
+    host: process.env.DB_HOST,
+    port: Number(process.env.DB_PORT),
+    username: process.env.DB_USER,
+    password: process.env.DB_PASSWORD,
+    database: process.env.DB_NAME,
     synchronize: false,
     entities: [User, Company, Job, Application, Skill],
     migrations: ['dist/database/migrations/*.js'],

@@ -30,6 +30,28 @@ type Application {
   status: String!
 }
 
+type AuthPayload {
+  accessToken: String!
+  user: User!
+}
+
 type Query {
   hello(name: String = "World"): String!
+}
+
+type Mutation {
+  signUp(input: SignUpInput!): AuthPayload!
+  signIn(input: SignInInput!): AuthPayload!
+}
+
+input SignUpInput {
+  firstName: String!
+  lastName: String!
+  email: String!
+  password: String!
+}
+
+input SignInInput {
+  email: String!
+  password: String!
 }
