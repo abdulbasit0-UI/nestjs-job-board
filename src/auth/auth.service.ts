@@ -49,6 +49,8 @@ export class AuthService {
     }
 
     async validateUserById(id: string): Promise<User | null> {
-        return this.userRepository.findOne({ where: { id }, select: ['id', 'email', 'role'] })
+        console.log(id, "id")
+        await this.userRepository.manager.connection.queryResultCache?.clear()
+        return this.userRepository.findOneBy({ id })
     }
 }

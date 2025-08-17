@@ -8,19 +8,22 @@ import { typeormConfig } from './config/database';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { AuthModule } from './auth/auth.module';
 import { JwtStrategy } from './auth/strategies/jwt.strategy';
-import { APP_GUARD } from '@nestjs/core';
-import { GqlAuthGuard } from './auth/guards/gql-auth.guard';
-import { RolesGuard } from './auth/guards/roles.guard';
+import { CompaniesModule } from './companies/companies.module';
+import { ApolloServerPluginLandingPageLocalDefault } from '@apollo/server/plugin/landingPage/default';
+import { UsersModule } from './users/user.module';
 @Module({
   imports: [
     GraphQLModule.forRoot<ApolloDriverConfig>({
       driver: ApolloDriver,
       autoSchemaFile: 'schema.gql',
-      playground: process.env.NODE_ENV !== 'production',
+      playground: false,
+      plugins: [ApolloServerPluginLandingPageLocalDefault() as any],
       context: ({ req }: { req: unknown }) => ({ req }),
     }),
     TypeOrmModule.forRoot(typeormConfig()),
     AuthModule,
+    CompaniesModule,
+    UsersModule,
   ],
   controllers: [AppController],
   providers: [AppService, HelloResolver, JwtStrategy],
