@@ -14,7 +14,9 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
             secretOrKey: process.env.JWT_SECRET!,
         })
     }
-    async validate(payload: { sub: string, role: string}): Promise<User | null> {
-        return this.authService.validateUserById(payload.sub)
+    async validate(payload: { id: string, role: string}): Promise<User | null> {
+        
+        console.log(payload)
+        return this.authService.validateUserById(payload.id)
     }
 }

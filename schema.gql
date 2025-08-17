@@ -35,13 +35,32 @@ type AuthPayload {
   user: User!
 }
 
+type CompanyConnection {
+  nodes: [Company!]!
+  totalCount: Float!
+}
+
+type UserConnection {
+  nodes: [User!]!
+  totalCount: Float!
+}
+
 type Query {
   hello(name: String = "World"): String!
+  companies(limit: Int! = 20, offset: Int! = 0): CompanyConnection!
+  company(id: String!): Company!
+  users(limit: Int! = 20, offset: Int! = 0): UserConnection!
+  me: User!
 }
 
 type Mutation {
   signUp(input: SignUpInput!): AuthPayload!
   signIn(input: SignInInput!): AuthPayload!
+  createCompany(input: CreateCompanyInput!): Company!
+  updateCompany(id: String!, input: UpdateCompanyInput!): Company!
+  deleteCompany(id: String!): Boolean!
+  updateProfile(input: UpdateUserInput!): User!
+  deleteProfile: Boolean!
 }
 
 input SignUpInput {
@@ -54,4 +73,21 @@ input SignUpInput {
 input SignInInput {
   email: String!
   password: String!
+}
+
+input CreateCompanyInput {
+  name: String!
+  description: String
+}
+
+input UpdateCompanyInput {
+  name: String
+  description: String
+}
+
+input UpdateUserInput {
+  firstName: String
+  lastName: String
+  email: String
+  password: String
 }
